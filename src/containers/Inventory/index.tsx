@@ -1,11 +1,17 @@
-import React from "react";
-import Navbar from "./Navbar";
-// import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
-// import ProductCard from "./ProductCard";
-// import { BiSearch } from "react-icons/bi"
-import CustomDropdown from "./CustomDropdown";
+import React, { FC, useState } from "react";
+import Navbar from "../../components/Navbar";
 
-const Inventory = () => {
+// import ProductCard from "./ProductCard";
+
+import CustomDropdown from "../../components/CustomDropdown";
+import CustomInput from "../../components/CustomInput"
+
+interface FilterProps {
+    option : number,
+    name : string
+}
+const Inventory: FC = () => {
+    const [filter, setFilter] = useState<FilterProps>({ option: -1, name: "" });
     // const product =
     // {
     //     id: 1,
@@ -27,15 +33,13 @@ const Inventory = () => {
                 description={product.description}
                 image={product.image}
             /> */}
-            {/* <InputGroup w="20rem">
-                <InputRightElement>
-                    <BiSearch />
-                </InputRightElement>
-                <Input type="text" />
-            </InputGroup> */}
+           
+           <CustomInput  width="90%"/>
 
-
-            <CustomDropdown />
+            <CustomDropdown
+                filter={filter}
+                setFilter={setFilter}
+            />
         </div>
     );
 };

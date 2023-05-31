@@ -1,0 +1,10 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap : 1.5rem;
+    border: 1px solid lightGray;
+    height: max-content;
+    width: 30rem;
+    padding: 5rem;
+    border-radius: 0.5rem;
+}
