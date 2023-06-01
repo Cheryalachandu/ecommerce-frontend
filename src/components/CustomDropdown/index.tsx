@@ -16,7 +16,6 @@ interface DropownProps {
 
 const CustomDropdown: FC<DropownProps> = (props) => {
   const { filter, setFilter } = props;
-  console.log(filter)
 
   const items: MenuProps['items'] = [
     {
@@ -36,13 +35,13 @@ const CustomDropdown: FC<DropownProps> = (props) => {
     },
     {
       label: <Text>Default</Text>,
-      key: '3',
+      key: '-1',
       onClick: () => setFilter({ ...filter, option: -1, name: "" })
     },
   ];
   return (
     <Dropdown menu={{ items }} cursor-pointer>
-      <Text cursor="pointer" w="10rem" h="2rem" borderRadius="0.25rem" border="1px solid" borderColor="blackAlpha.400" display="flex" justifyContent="center" alignItems="center">{filter?.name || "Select an Option "}</Text>
+      <Text cursor="pointer" w="10rem" h="2.5rem" borderRadius="0.25rem" border="1px solid" borderColor="blackAlpha.400" display="flex" justifyContent="center" alignItems="center">{filter?.name || "Select an Option "}</Text>
     </Dropdown>
 
   )

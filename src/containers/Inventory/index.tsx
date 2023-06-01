@@ -1,47 +1,66 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useEffect, useMemo } from "react";
 import Navbar from "../../components/Navbar";
-
-// import ProductCard from "./ProductCard";
-
+import ProductsList from "../../components/ProductsList";
 import CustomDropdown from "../../components/CustomDropdown";
-import CustomInput from "../../components/CustomInput"
+import CustomInput from "../../components/CustomInput";
+import { HStack } from "@chakra-ui/react";
+import { useParams } from "react-router";
+import axiosInstance from "../../api/axiosInstance";
+import { ProductProps } from "../../utils/helper";
+import { getFilteredProducts } from "../../utils/helper";
 
 interface FilterProps {
-    option : number,
-    name : string
+  option: number;
+  name: string;
 }
 const Inventory: FC = () => {
-    const [filter, setFilter] = useState<FilterProps>({ option: -1, name: "" });
-    // const product =
-    // {
-    //     id: 1,
-    //     title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    //     price: 109.95,
-    //     description:
-    //         "Your perfect pack for everyday use and walks in the forest. Stash your laptop (up to 15 inches) in the padded sleeve, your everyday",
-    //     category: "men's clothing",
-    //     image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg",
-    //     rating: { rate: 3.9, count: 120 },
-    // }
-    return (
-        <div>
-            <Navbar />
-            {/* <ProductCard
-                id={product.id}
-                title={product.title}
-                price={product.price}
-                description={product.description}
-                image={product.image}
-            /> */}
-           
-           <CustomInput  width="90%"/>
+  const { category } = useParams();
+  const [products, setProducts] = useState<ProductProps[]>([]);
+  const [updatedProducts, setUpdatedProducts] = useState<ProductProps[]>([
+    ...products,
+  ]);
+  const [filter, setFilter] = useState<FilterProps>({ option: -1, name: "" });
+  const [search, setSearch] = useState<string>("");
 
-            <CustomDropdown
-                filter={filter}
-                setFilter={setFilter}
-            />
-        </div>
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const productsResponse = await axiosInstance.get(
+          `/products/${category}`
+        );
+        setProducts(productsResponse?.data);
+      } catch (err: any) {
+        console.log(err.message);
+      }
+    };
+    fetchData();
+  }, [category]);
+
+  useEffect(() => {
+    setUpdatedProducts(getFilteredProducts(products, filter.option))
+  }, [filter]);
+
+  useEffect(() => {
+    const _products = products.filter((product) =>
+      product?.title?.trim().toLowerCase().includes(search)
     );
+    setUpdatedProducts(_products)
+  }, [search]);
+
+  const searchHandler = (e: any) => {
+    setSearch(e.target.value);
+  };
+
+  return (
+    <div>
+      <Navbar />
+      <HStack justifyContent="space-around">
+        <CustomInput width="x-sm" onChange={searchHandler} />
+        <CustomDropdown filter={filter} setFilter={setFilter} />
+      </HStack>
+      <ProductsList productList={updatedProducts} />
+    </div>
+  );
 };
 
 export default Inventory;

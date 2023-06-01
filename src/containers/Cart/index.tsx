@@ -211,6 +211,9 @@ export const CartProducts = () => {
   );
 };
 
+const searchHandler = () => {
+  
+}
 export const CheckOut = () => {
   return (
     <VStack
@@ -226,7 +229,7 @@ export const CheckOut = () => {
         <Text>SubTotal</Text>
         <Text> $ 20000</Text>
       </HStack>
-      <CustomInput width="100%" />
+      <CustomInput width="100%" onChange={searchHandler}/>
       <HStack justifyContent="space-between" w="100%">
         <Text>Discount</Text>
         <Text> $ 2000</Text>

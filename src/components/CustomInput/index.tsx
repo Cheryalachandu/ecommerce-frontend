@@ -1,19 +1,20 @@
 import React, { FC } from 'react'
-import { Input, InputGroup, InputRightElement } from "@chakra-ui/react";
+import { Input, InputGroup, InputRightAddon } from "@chakra-ui/react";
 import { BiSearch } from "react-icons/bi"
 
 
 interface CustomInputProps {
-    width : string
+    width: string,
+    onChange :  React.ChangeEventHandler<HTMLInputElement>
 }
 const CustomInput: FC<CustomInputProps> = (props) => {
-    const { width } = props;
+    const { width, onChange } = props;
     return (
         <InputGroup w={width}>
-            <InputRightElement>
+            <Input type="text" width={width} onChange={(e) => onChange(e)}/>
+            <InputRightAddon>
                 <BiSearch />
-            </InputRightElement>
-            <Input type="text"  width={width}/>
+            </InputRightAddon>
         </InputGroup >
     )
 }
