@@ -9,7 +9,7 @@ const SecureRoutes = () => {
   return (
     <Routes>
       <Route path="/products/:category" element={<Inventory />} />
-      <Route path="/products/productView" element={<ProductView />} />
+      <Route path="/products/product" element={<ProductView />} />
       <Route path="/cart" element={<Cart />} />
       <Route path="/login" element={<Login />} />
     </Routes>

@@ -50,7 +50,6 @@ export const getFilteredProducts = (
   products: any,
   option: number
 ) => {
-console.log(option)
   const productList = [...products];
   switch (option) {
     case 0:

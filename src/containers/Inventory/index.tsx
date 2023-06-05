@@ -1,4 +1,4 @@
-import React, { FC, useState, useEffect, useMemo } from "react";
+import React, { FC, useState, useEffect } from "react";
 import Navbar from "../../components/Navbar";
 import ProductsList from "../../components/ProductsList";
 import CustomDropdown from "../../components/CustomDropdown";
@@ -38,14 +38,14 @@ const Inventory: FC = () => {
 
   useEffect(() => {
     setUpdatedProducts(getFilteredProducts(products, filter.option))
-  }, [filter]);
+  }, [filter, products]);
 
   useEffect(() => {
     const _products = products.filter((product) =>
       product?.title?.trim().toLowerCase().includes(search)
     );
     setUpdatedProducts(_products)
-  }, [search]);
+  }, [search, products]);
 
   const searchHandler = (e: any) => {
     setSearch(e.target.value);
@@ -54,8 +54,8 @@ const Inventory: FC = () => {
   return (
     <div>
       <Navbar />
-      <HStack justifyContent="space-around">
-        <CustomInput width="x-sm" onChange={searchHandler} />
+      <HStack justifyContent="flex-end" p="1rem 5em" gap="15rem">
+        <CustomInput width="lg" onChange={searchHandler} />
         <CustomDropdown filter={filter} setFilter={setFilter} />
       </HStack>
       <ProductsList productList={updatedProducts} />
